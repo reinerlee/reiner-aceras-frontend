@@ -26,13 +26,13 @@ export default class CarsList extends Component {
 
       page: 1,
       count: 0,
-      pageSize: 3,
+      pageSize: 10,
       redirect: null,
       userReady: false,
       currentUser: { username: "" }	  
     };
 
-    this.pageSizes = [3, 6, 9];
+    this.pageSizes = [10, 20, 30];
   }
 
   componentDidMount() {
@@ -80,11 +80,11 @@ export default class CarsList extends Component {
         const { cars, totalPages } = response.data;
 
         this.setState({
-          cars: response.data,
+          cars: cars,
           count: totalPages,
         });
         console.log(response.data);
-		console.log('load data');
+		
       })
       .catch((e) => {
         console.log(e);
