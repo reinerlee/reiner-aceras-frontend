@@ -8,6 +8,10 @@ class CarDataService {
   get(id) {
     return http.get(`/cars/${id}`);
   }
+  
+  getStats(id) {
+    return http.get(`/cars/stats`);
+  }
 
   create(data) {
     return http.post("/cars", data);

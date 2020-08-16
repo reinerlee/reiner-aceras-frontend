@@ -39,6 +39,7 @@ export default class CarsList extends Component {
     const currentUser = AuthService.getCurrentUser();
     if (!currentUser) this.setState({ redirect: "/login" });
     this.retrieveCars();
+    this.stats();
   }
 
   onChangeSearchTitle(e) {
@@ -82,6 +83,26 @@ export default class CarsList extends Component {
         this.setState({
           cars: cars,
           count: totalPages,
+        });
+        console.log(response.data);
+		
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  stats() {
+	
+    CarDataService.getStats()
+      .then((response) => {
+        const { totalCars, redCars, blueCars, yellowCars } = response.data;
+
+        this.setState({
+          totalCars: totalCars,
+          redCars: redCars,
+          blueCars: blueCars,
+          yellowCars: yellowCars,
         });
         console.log(response.data);
 		
@@ -167,10 +188,58 @@ export default class CarsList extends Component {
       page,
       count,
       pageSize,
+      totalCars,
+      redCars,
+      blueCars,
+      yellowCars,
     } = this.state;
 
     return (
       <div className="list row">
+		<div class="col-xl-3 col-sm-6 py-2">
+			<div class="card bg-success text-white h-100">
+				<div class="card-body bg-success">
+					<div class="rotate">
+						<i class="fa fa-user fa-4x"></i>
+					</div>
+					<h6 class="text-uppercase">Total Cars</h6>
+					<h1 class="display-4">{totalCars}</h1>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-sm-6 py-2">
+			<div class="card text-white bg-danger h-100">
+				<div class="card-body bg-danger">
+					<div class="rotate">
+						<i class="fa fa-list fa-4x"></i>
+					</div>
+					<h6 class="text-uppercase">Red Cars</h6>
+					<h1 class="display-4">{redCars}</h1>
+				</div>
+			</div>
+		</div>
+		<div class="col-xl-3 col-sm-6 py-2">
+			<div class="card text-white bg-info h-100">
+				<div class="card-body bg-info">
+					<div class="rotate">
+						<i class="fa fa-twitter fa-4x"></i>
+					</div>
+					<h6 class="text-uppercase">Blue Cars</h6>
+					<h1 class="display-4">{blueCars}</h1>
+				</div>
+			</div>
+		</div>		
+		<div class="col-xl-3 col-sm-6 py-2">
+			<div class="card text-white bg-warning h-100">
+				<div class="card-body">
+					<div class="rotate">
+						<i class="fa fa-share fa-4x"></i>
+					</div>
+					<h6 class="text-uppercase">Yellow Cars</h6>
+					<h1 class="display-4">{yellowCars}</h1>
+				</div>
+			</div>
+		</div>
         <div className="col-md-12">
           <div className="input-group mb-3 col-md-8">
             <input
